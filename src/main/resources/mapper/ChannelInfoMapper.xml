@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyait.manage.dao.ChannelInfoMapper">
+    <resultMap id="BaseResultMap" type="com.wyait.manage.model.ChannelInfoVO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="channel_code" jdbcType="VARCHAR" property="channelCode"/>
+        <result column="channel_desc" jdbcType="VARCHAR" property="channelDesc"/>
+        <result column="channel_price" jdbcType="VARCHAR" property="channelPrice"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+        <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, channel_code, channel_desc, channel_price, created_at, created_by, updated_at,
+        updated_by
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from channel_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM channel_info
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.wyait.manage.model.ChannelInfoVO">
+        INSERT INTO channel_info (id, channel_code, channel_desc,
+                                  channel_price, created_at, created_by,
+                                  updated_at, updated_by)
+        VALUES (#{id,jdbcType=INTEGER}, #{channelCode,jdbcType=VARCHAR}, #{channelDesc,jdbcType=VARCHAR},
+                #{channelPrice,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
+                #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wyait.manage.model.ChannelInfoVO">
+        insert into channel_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="channelCode != null">
+                channel_code,
+            </if>
+            <if test="channelDesc != null">
+                channel_desc,
+            </if>
+            <if test="channelPrice != null">
+                channel_price,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="updatedBy != null">
+                updated_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="channelCode != null">
+                #{channelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="channelDesc != null">
+                #{channelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="channelPrice != null">
+                #{channelPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.wyait.manage.model.ChannelInfoVO">
+        update channel_info
+        <set>
+            <if test="channelCode != null">
+                channel_code = #{channelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="channelDesc != null">
+                channel_desc = #{channelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="channelPrice != null">
+                channel_price = #{channelPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                updated_by = #{updatedBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wyait.manage.model.ChannelInfoVO">
+        UPDATE channel_info
+        SET channel_code  = #{channelCode,jdbcType=VARCHAR},
+            channel_desc  = #{channelDesc,jdbcType=VARCHAR},
+            channel_price = #{channelPrice,jdbcType=VARCHAR},
+            created_at    = #{createdAt,jdbcType=TIMESTAMP},
+            created_by    = #{createdBy,jdbcType=VARCHAR},
+            updated_at    = #{updatedAt,jdbcType=TIMESTAMP},
+            updated_by    = #{updatedBy,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectByParam" parameterType="com.wyait.manage.model.ChannelInfoVO"
+            resultType="com.wyait.manage.model.ChannelInfoVO">
+        select
+        <include refid="Base_Column_List"/>
+        from channel_info
+        <where>
+            <trim>
+                <if test="channelCode != null">
+                  AND  channel_code = #{channelCode,jdbcType=VARCHAR}
+                </if>
+                <if test="channelDesc != null">
+                  AND  channel_desc like CONCAT('%', #{channelDesc}, '%')
+                </if>
+            </trim>
+        </where>
+    </select>
+</mapper>

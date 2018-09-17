@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyait.manage.dao.NotesResultMapper">
+  <resultMap id="BaseResultMap" type="com.wyait.manage.entity.NotesResultDTO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="channel_code" jdbcType="VARCHAR" property="channelCode" />
+    <result column="send_status" jdbcType="VARCHAR" property="sendStatus" />
+    <result column="batch_code" jdbcType="VARCHAR" property="batchCode" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="phone_type" jdbcType="VARCHAR" property="phoneType" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, phone, channel_code, send_status, batch_code, signature,phoneType, created_at, created_by,
+    updated_at, updated_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from notes_result
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from notes_result
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wyait.manage.entity.NotesResultDTO">
+    insert into notes_result (id, user_id, phone, 
+      channel_code, send_status, batch_code, signature,
+      created_at, created_by, updated_at, 
+      updated_by)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, 
+      #{channelCode,jdbcType=VARCHAR}, #{sendStatus,jdbcType=VARCHAR}, #{batchCode,jdbcType=VARCHAR},
+                                   #{signature,jdbcType=VARCHAR},
+      #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{updatedBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wyait.manage.entity.NotesResultDTO">
+    insert into notes_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="channelCode != null">
+        channel_code,
+      </if>
+      <if test="sendStatus != null">
+        send_status,
+      </if>
+      <if test="batchCode != null">
+        batch_code,
+      </if>
+      <if test="signature != null">
+        signature,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCode != null">
+        #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null">
+        #{sendStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="batchCode != null">
+        #{batchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null">
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into notes_result
+    (user_id, phone, channel_code, send_status, batch_code,signature,phone_type, created_at, created_by,
+      updated_at, updated_by)
+    values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="item.userId != null">
+          #{item.userId,jdbcType=INTEGER},
+        </if>
+        <if test="item.userId == null">
+          NULL,
+        </if>
+        <if test="item.phone != null">
+          #{item.phone,jdbcType=VARCHAR},
+        </if>
+        <if test="item.phone == null">
+          NULL,
+        </if>
+        <if test="item.channelCode != null">
+          #{item.channelCode,jdbcType=VARCHAR},
+        </if>
+        <if test="item.channelCode == null">
+          NULL,
+        </if>
+        <if test="item.sendStatus != null">
+          #{item.sendStatus,jdbcType=VARCHAR},
+        </if>
+        <if test="item.sendStatus == null">
+          NULL,
+        </if>
+        <if test="item.batchCode != null">
+        #{item.batchCode,jdbcType=VARCHAR},
+        </if>
+        <if test="item.batchCode == null">
+          NULL,
+        </if>
+        <if test="item.signature != null">
+          #{item.signature,jdbcType=VARCHAR},
+        </if>
+        <if test="item.signature == null">
+          NULL,
+        </if>
+        <if test="item.phoneType != null">
+          #{item.phoneType,jdbcType=VARCHAR},
+        </if>
+        <if test="item.phoneType == null">
+          NULL,
+        </if>
+        <if test="item.createdAt != null">
+          #{item.createdAt,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.createdAt == null">
+          NULL,
+        </if>
+        <if test="item.createdBy != null">
+          #{item.createdBy,jdbcType=VARCHAR},
+        </if>
+        <if test="item.createdBy == null">
+          NULL,
+        </if>
+        <if test="item.updatedAt != null">
+          #{item.updatedAt,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.updatedAt == null">
+          NULL,
+        </if>
+        <if test="item.updatedBy != null">
+          #{item.updatedBy,jdbcType=VARCHAR},
+        </if>
+        <if test="item.updatedBy == null">
+          NULL,
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wyait.manage.entity.NotesResultDTO">
+    update notes_result
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCode != null">
+        channel_code = #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null">
+        send_status = #{sendStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="batchCode != null">
+        batch_code = #{batchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null">
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wyait.manage.entity.NotesResultDTO">
+    update notes_result
+    set user_id = #{userId,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      channel_code = #{channelCode,jdbcType=VARCHAR},
+      send_status = #{sendStatus,jdbcType=VARCHAR},
+      batch_code = #{batchCode,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

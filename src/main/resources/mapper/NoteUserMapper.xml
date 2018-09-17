@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyait.manage.dao.NoteUserMapper">
+  <resultMap id="BaseResultMap" type="com.wyait.manage.pojo.NoteUser">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="sms_title" jdbcType="VARCHAR" property="smsTitle" />
+    <result column="sms_template" jdbcType="VARCHAR" property="smsTemplate" />
+    <result column="insert_time" jdbcType="TIMESTAMP" property="insertTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id,user_id,sms_title,sms_template,insert_time,update_time
+  </sql>
+
+  <insert id="insert" parameterType="com.wyait.manage.pojo.NoteUser">
+    insert into note_user (id, user_id,sms_title, sms_template,
+      insert_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{smsTitle,jdbcType=VARCHAR}, #{smsTemplate,jdbcType=VARCHAR},
+      #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wyait.manage.pojo.NoteUser">
+    insert into note_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="smsTitle != null">
+        sms_title,
+      </if>
+      <if test="smsTemplate != null">
+        sms_template,
+      </if>
+      <if test="insertTime != null">
+        insert_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="smsTitle != null">
+        #{smsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="smsTemplate != null">
+        #{smsTemplate,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getNotes" resultType="com.wyait.manage.pojo.NoteUser">
+    select
+    <include refid="Base_Column_List"/>
+    from note_user
+    where user_id = #{noteUser.userId}
+      <if test="noteUser.smsTitle !=null and noteUser.smsTitle!=''">
+        AND sms_title like  CONCAT(CONCAT('%', #{noteUser.smsTitle}), '%')
+      </if>
+    ORDER BY insert_time DESC
+  </select>
+  <select id="getNoteById" resultType="com.wyait.manage.pojo.NoteUser">
+    select
+    <include refid="Base_Column_List"/>
+    from note_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="delNote" parameterType="java.lang.Integer">
+    DELETE FROM note_user where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+</mapper>
